@@ -3,14 +3,18 @@ package com.ss.springJWT.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ss.springJWT.entity.AuthRequest;
+import com.ss.springJWT.entity.User;
+import com.ss.springJWT.repository.UserRepository;
 import com.ss.springJWT.util.JwtUtil;
 
+//@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 public class WelcomeController {
 
@@ -18,6 +22,8 @@ public class WelcomeController {
     private JwtUtil jwtUtil;
     @Autowired
     private AuthenticationManager authenticationManager;
+    @Autowired
+    private UserRepository repository;
 	
     @GetMapping("/hello")
     public String welcome() {
@@ -27,6 +33,12 @@ public class WelcomeController {
     @GetMapping("/allowme")
     public String allowedMethod() {
         return "This is allowed !!";
+    }
+    
+    @PostMapping("/userDetails")
+    public User getDetailsFromUserName(@RequestBody User userdetails) {
+    	User user = repository.findByUserName(userdetails.getUserName());
+    	return user;
     }
     
     @PostMapping("/authenticate")

@@ -19,7 +19,6 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = repository.findByUserName(username);
-        System.out.println("The user name ans pwd:"+user.getPassword() +" "+ user.getEmail());
         return new org.springframework.security.core.userdetails.User(user.getUserName(),
         		user.getPassword(), new ArrayList<>());
     }
