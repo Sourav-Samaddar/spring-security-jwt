@@ -32,12 +32,15 @@ public class WelcomeController {
     
     @GetMapping("/allowme")
     public String allowedMethod() {
+    	System.out.println("Heloooooooooo");
         return "This is allowed !!";
     }
     
     @PostMapping("/userDetails")
     public User getDetailsFromUserName(@RequestBody User userdetails) {
+    	System.out.println("Incoming user:"+userdetails.getUserName());
     	User user = repository.findByUserName(userdetails.getUserName());
+    	System.out.println("The UserName:"+user.getUserName()+" Email:"+user.getEmail());
     	return user;
     }
     
